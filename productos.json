@@ -1,0 +1,11 @@
+[
+    {
+        "id": 1,
+        "nombre": "audifonos",
+        "precio": 18990
+    },{
+        "id": 2,
+        "nombre": "aro de luz",
+        "precio": 21990
+    }
+]
