@@ -5,7 +5,16 @@ const PORT = process.env.PORT || 3000
 app.use(express.json())
 app.use(cors())
 
-app.get("/home", (req, res) => {res.send("hello World Express Js")})
+//pendiente agregar e implementar CORS
+
+app.get("/", (req, res) => {
+    res.sendFile(__dirname + "/index.html")
+})
+
+app.get("/home", (req, res) => {
+    res.send("hello World Express Js")
+});
+
 app.get("/cansiones", (req, res) => {
     try {
         const cansiones = JSON.parse(fs.readFileSync("cansiones.json"));
@@ -27,9 +36,19 @@ app.post("/cansiones", (req, res) => {
 app.delete("/cansiones/:id", (req, res) => {
     const { id } = req.params;
     const cansiones = JSON.parse(fs.readFileSync("cansiones.json", "utf8"));
-    const index = cansiones.findIndex(cansion => cansion.id === id);
+    const index = cansiones.findIndex(cansion => cansion.id == id);
     cansiones.splice(index, 1);
     fs.writeFileSync("cansiones.json", JSON.stringify(cansiones));
+    res.send("Cansion eliminada")
 })
+
+app.put("/cansiones/:id", (req, res) => {
+    const { id } = req.params;
+    const cancion = req.body;
+    const cansiones = JSON.parse(fs.readFileSync("cansiones.json", "utf8"));
+    fs.writeFileSync("cansiones.json", JSON.stringify(cansiones));
+    res.send("Listado de cansiones actualizado")
+})
+
 app.listen(PORT, console.log("¡Servidor encendido"))
 
